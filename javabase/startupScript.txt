@@ -1,0 +1,1 @@
+docker run --name testbase --network test -v /d/Java/itmuch-miniapp:/software/itmuch-miniapp -d testbase:1.0

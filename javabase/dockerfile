@@ -1,0 +1,23 @@
+FROM centos:centos8
+
+LABEL maintainer="Yasin Zhang"
+
+RUN yum install -y git 
+
+RUN yum install -y wget setup perl
+  
+RUN yum install -y vim
+
+RUN yum install -y python2
+
+RUN mkdir -p /software/install
+
+COPY install /software/install
+
+# 安装 MAVEN & JDK
+RUN cd /software/install \
+    && tar -xvf apache-maven-3.6.3-bin.tar.gz -C /software \
+    && ln -s /software/apache-maven-3.6.3/bin/mvn /usr/local/bin/mvn \
+    && rpm -iv jdk-8u261-linux-x64.rpm
+
+CMD ["tail", "-f", "/dev/null"]
