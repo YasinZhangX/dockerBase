@@ -1,16 +1,6 @@
-FROM centos:centos8
+FROM testbase:latest
 
 LABEL maintainer="Yasin Zhang"
-
-RUN yum install -y git 
-
-RUN yum install -y wget setup perl
-  
-RUN yum install -y vim
-
-RUN yum install -y python2
-
-RUN mkdir -p /software/install
 
 COPY install /software/install
 
