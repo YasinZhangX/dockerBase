@@ -1,0 +1,18 @@
+FROM oddrationale/docker-shadowsocks
+
+LABEL maintainer="Yasin Zhang"
+
+WORKDIR /VPN
+
+COPY install /VPN
+
+# 安装 ExpressVPN
+RUN cd /VPN \
+    && chmod -R 777 /VPN \
+    && dpkg -i xv_3.0.2.12-1_amd64.deb
+    
+# 配置shadowsocks服务
+RUN cp /VPN/shadowsocks.service /etc/systemd/system/ \
+  && systemctl enable shadowsocks
+
+ENTRYPOINT ["/sbin/init"]

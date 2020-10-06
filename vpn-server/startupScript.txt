@@ -1,0 +1,1 @@
+docker run --privileged=true -d -p 20120:20120 --name vpn-server vpn-server:latest
