@@ -1,18 +1,32 @@
 FROM oddrationale/docker-shadowsocks
 
-LABEL maintainer="Yasin Zhang"
+LABEL maintainer="zyxuan97@foxmail.com"
+
+ARG APP=xv_3.0.2.12-1_amd64.deb
 
 WORKDIR /VPN
 
 COPY install /VPN
 
+# 切换国内源
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak \
+  && cp /VPN/sources.list /etc/apt/sources.list
+
 # 安装 ExpressVPN
-RUN cd /VPN \
-    && chmod -R 777 /VPN \
-    && dpkg -i xv_3.0.2.12-1_amd64.deb
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates wget expect iproute2 curl vim \
+    && rm -rf /var/lib/apt/lists/* \
+    && dpkg -i /VPN/${APP} \
+    && apt-get purge -y --auto-remove wget
     
 # 配置shadowsocks服务
 RUN cp /VPN/shadowsocks.service /etc/systemd/system/ \
+  && chmod a-x /etc/systemd/system/shadowsocks.service \
   && systemctl enable shadowsocks
+  
+# expressvpnConnect
+  RUN cp /VPN/expressvpnConnect.service /etc/systemd/system/ \
+    && chmod a-x /etc/systemd/system/expressvpnConnect.service \
+    && systemctl enable expressvpnConnect
 
 ENTRYPOINT ["/sbin/init"]
