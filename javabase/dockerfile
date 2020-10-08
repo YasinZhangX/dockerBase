@@ -1,13 +1,17 @@
-FROM testbase:latest
+FROM serverbase:latest
 
 LABEL maintainer="Yasin Zhang"
 
 COPY install /software/install
 
+ARG MAVEN=apache-maven-3.6.3
+ARG MAVEN_PKG=${MAVEN}-bin.tar.gz
+ARG JDK_PKG=jdk-8u261-linux-x64.rpm
+
 # 安装 MAVEN & JDK
 RUN cd /software/install \
-    && tar -xvf apache-maven-3.6.3-bin.tar.gz -C /software \
-    && ln -s /software/apache-maven-3.6.3/bin/mvn /usr/local/bin/mvn \
-    && rpm -iv jdk-8u261-linux-x64.rpm
+    && tar -xvf ${MAVEN_PKG} -C /software \
+    && ln -s /software/${MAVEN}/bin/mvn /usr/local/bin/mvn \
+    && rpm -iv ${JDK_PKG}
 
 CMD ["tail", "-f", "/dev/null"]
