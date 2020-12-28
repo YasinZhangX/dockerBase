@@ -2,7 +2,7 @@ FROM oddrationale/docker-shadowsocks
 
 LABEL maintainer="zyxuan97@foxmail.com"
 
-ARG APP=xv_3.0.2.12-1_amd64.deb
+ARG APP=xv_3.3.0.21-1_amd64.deb
 
 WORKDIR /VPN
 
@@ -11,6 +11,9 @@ COPY install /VPN
 # 切换国内源
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak \
   && cp /VPN/sources.list /etc/apt/sources.list
+  
+# 安装必要工具
+RUN apt-get update && apt-get install -y inetutils-ping net-tools
 
 # 安装 ExpressVPN
 RUN apt-get update && apt-get install -y --no-install-recommends \

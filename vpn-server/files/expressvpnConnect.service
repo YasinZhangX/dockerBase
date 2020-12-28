@@ -1,0 +1,10 @@
+[Unit]
+Description=expressvpnConnect
+After=expressvpn.service
+
+[Service]
+TimeoutStartSec=0
+ExecStart=/bin/bash /VPN/expressvpnConnect.sh
+
+[Install]
+WantedBy=multi-user.target

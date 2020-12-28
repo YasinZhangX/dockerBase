@@ -1,0 +1,9 @@
+[Unit]
+Description=shadowsocks
+
+[Service]
+TimeoutStartSec=0
+ExecStart=/usr/local/bin/ssserver -s 0.0.0.0 -p 20120 -k myVPNgo -m aes-256-cfb
+
+[Install]
+WantedBy=multi-user.target
