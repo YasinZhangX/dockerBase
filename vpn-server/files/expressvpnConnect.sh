@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 cp /etc/resolv.conf /tmp/resolv.conf
 su -c 'umount /etc/resolv.conf'

@@ -6,6 +6,7 @@ ARG APP=xv_3.3.0.21-1_amd64.deb
 
 WORKDIR /VPN
 
+COPY files /VPN
 COPY install /VPN
 
 # 切换国内源
@@ -13,7 +14,8 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak \
   && cp /VPN/sources.list /etc/apt/sources.list
   
 # 安装必要工具
-RUN apt-get update && apt-get install -y inetutils-ping net-tools
+RUN apt-get update && apt-get install -y inetutils-ping \
+    net-tools cron
 
 # 安装 ExpressVPN
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -27,9 +29,16 @@ RUN cp /VPN/shadowsocks.service /etc/systemd/system/ \
   && chmod a-x /etc/systemd/system/shadowsocks.service \
   && systemctl enable shadowsocks
   
-# expressvpnConnect
-  RUN cp /VPN/expressvpnConnect.service /etc/systemd/system/ \
-    && chmod a-x /etc/systemd/system/expressvpnConnect.service \
-    && systemctl enable expressvpnConnect
+# 配置expressvpnConnect服务
+RUN cp /VPN/expressvpnConnect.service /etc/systemd/system/ \
+  && chmod a-x /etc/systemd/system/expressvpnConnect.service \
+  && systemctl enable expressvpnConnect
+
+# 配置定时任务
+RUN mkdir -p /var/spool/cron/crontabs \
+  && cp /VPN/crontab /var/spool/cron/crontabs/root \
+  && chown -R root:crontab /var/spool/cron/crontabs/root \
+  && touch /var/log/cron.log \
+  && systemctl enable cron
 
 ENTRYPOINT ["/sbin/init"]
