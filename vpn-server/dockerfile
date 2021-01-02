@@ -15,7 +15,10 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak \
   
 # 安装必要工具
 RUN apt-get update && apt-get install -y inetutils-ping \
-    net-tools cron
+    net-tools cron git
+
+# 升级 Shadowsocks 为最新版本
+RUN pip install git+https://github.com/shadowsocks/shadowsocks.git@master
 
 # 安装 ExpressVPN
 RUN apt-get update && apt-get install -y --no-install-recommends \
