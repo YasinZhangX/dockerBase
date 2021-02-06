@@ -1,9 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 lines=`cat /VPN/guard.log | wc -l`
 
 FILE="/VPN/guard.log"
-MAX_LINE=5
+MAX_LINE=200
+
+if [[ ! -f $FILE ]]; then
+  touch $FILE
+fi
 
 if [ -a $FILE ]; then
   if [[ $lines -gt $MAX_LINE ]]; then

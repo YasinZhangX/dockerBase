@@ -2,7 +2,7 @@ FROM oddrationale/docker-shadowsocks
 
 LABEL maintainer="zyxuan97@foxmail.com"
 
-ARG APP=xv_3.3.0.21-1_amd64.deb
+ARG APP=xv_3.5.0.33-1_amd64_2.deb
 
 WORKDIR /VPN
 
