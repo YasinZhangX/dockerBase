@@ -1,0 +1,10 @@
+FROM gcc:latest
+
+LABEL maintainer="Yasin Zhang"
+
+RUN apt-get update \
+  && apt-get -y install gdb gdbserver cmake
+
+WORKDIR /root
+
+CMD ["tail", "-f", "/dev/null"]
