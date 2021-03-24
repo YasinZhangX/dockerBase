@@ -26,4 +26,8 @@ elif [[ "$STATUS" =~ "Not connected" ]];then
   echo "not connected"
   echo "start connecting..."
   expressvpn connect
+elif [[ "$STATUS" =~ "^Unable to connect.*" ]];then
+  echo "not connected"
+  echo "start connecting..."
+  expressvpn connect
 fi
