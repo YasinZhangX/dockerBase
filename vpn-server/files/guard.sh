@@ -16,18 +16,13 @@ if [ -a $FILE ]; then
   fi
 fi
 
-STATUS=`expressvpn status`
+TESTURL="www.google.com"
 
-if [[ "$STATUS" =~ "Connected to" ]];then
-  echo "Connected"
-elif [[ "$STATUS" =~ "Connecting" ]];then
-  echo "Connecting"
-elif [[ "$STATUS" =~ "Not connected" ]];then
+ping -s 1 -c 1 $TESTURL
+if [[ "$?" != "0" ]];then
   echo "not connected"
   echo "start connecting..."
   expressvpn connect
-elif [[ "$STATUS" =~ "^Unable to connect.*" ]];then
-  echo "not connected"
-  echo "start connecting..."
-  expressvpn connect
+else
+  echo "connected"
 fi

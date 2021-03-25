@@ -20,5 +20,5 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-0 * * * * systemctl restart shadowsocks.service
-*/1 * * * * /bin/bash /VPN/guard.sh >> /VPN/guard.log
+*/30 * * * * systemctl restart shadowsocks.service
+*/3 * * * * /bin/bash /VPN/guard.sh >> /VPN/guard.log
