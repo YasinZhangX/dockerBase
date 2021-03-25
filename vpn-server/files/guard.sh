@@ -18,7 +18,8 @@ fi
 
 TESTURL="www.google.com"
 
-ping -s 1 -c 1 $TESTURL
+ping -s 1 -c 1 $TESTURL > /dev/null 2>&1
+
 if [[ "$?" != "0" ]];then
   echo "not connected"
   echo "start connecting..."
